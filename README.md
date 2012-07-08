@@ -2,6 +2,8 @@
 
 Ruby bindings for [TaskWarrior](http://taskwarrior.org)
 
+[![Build Status](https://secure.travis-ci.org/nerab/taskwarrior.png?branch=master)](http://travis-ci.org/nerab/taskwarrior)
+
 ## Installation
 
 Add this line to your application's Gemfile:
