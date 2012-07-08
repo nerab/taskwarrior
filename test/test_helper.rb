@@ -1,4 +1,5 @@
 require 'twtest'
+require 'taskwarrior'
 
 module TaskWarrior
   module Test
