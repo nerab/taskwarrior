@@ -27,6 +27,7 @@ module TaskWarrior
 
     include TaskWarrior::Validations
     validate :entry_cannot_be_in_the_future
+    validates :start_at, :wait_at, :end_at, :due_at, :with => :must_be_date_or_nil
 
     def initialize(description)
       @description = description
