@@ -134,28 +134,52 @@ class TestTask < Test::Unit::TestCase
     assert_valid(@task)
   end
 
-  def test_due_nil
-    @task.due_at = nil
+  def test_start_at
+    assert_datish(:start_at)
+  end
+
+  def test_wait_at
+    assert_datish(:wait_at)
+  end
+
+  def test_end_at
+    assert_datish(:end_at)
+  end
+
+  def test_due_at
+    assert_datish(:due_at)
+  end
+
+  def assert_datish(sym)
+    assert_datish_nil(sym)
+    assert_datish_empty(sym)
+    assert_datish_wrong_format(sym)
+    assert_datish_future(sym)
+    assert_datish_past(sym)
+  end
+
+  def assert_datish_nil(sym)
+    @task.send("#{sym}=", nil)
     assert_valid(@task)
   end
 
-  def test_due_empty
-    @task.due_at = ''
+  def assert_datish_empty(sym)
+    @task.send("#{sym}=", '')
     assert_invalid(@task)
   end
 
-  def test_due_wrong_format
-    @task.due_at = "foobar"
+  def assert_datish_wrong_format(sym)
+    @task.send("#{sym}=", "foobar")
     assert_invalid(@task)
   end
 
-  def test_due_future
-    @task.due_at = DateTime.now.advance(:days => 1)
+  def assert_datish_future(sym)
+    @task.send("#{sym}=", DateTime.now.advance(:days => 1))
     assert_valid(@task)
   end
 
-  def test_due_past
-    @task.due_at = DateTime.now.advance(:days => -1)
+  def assert_datish_past(sym)
+    @task.send("#{sym}=", DateTime.now.advance(:days => -1))
     assert_valid(@task)
   end
 end
