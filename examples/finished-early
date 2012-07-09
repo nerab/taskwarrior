@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+
+#
+# Prints those tasks the were completed before they were due.
+#
+# Call it like
+#
+# $ task export rc.json.array=on rc.verbose=nothing | examples/finished-early
+#
+
+require 'taskwarrior'
+
+r = TaskWarrior::Repository.new(ARGF.read)
+
+selected = r.tasks.select do |t|
+  t.status == :completed && t.due_at > t.end_at if t.due_at && t.end_at
+end
+
+puts "#{selected.size} tasks completed before they were due:"
+
+selected.group_by{|t| (t.due_at - t.end_at).truncate}.sort.each{|g, tasks|
+  puts "#{g} days early:"
+  tasks.each{|t|
+  	puts "  #{t.description}"
+  }
+}
