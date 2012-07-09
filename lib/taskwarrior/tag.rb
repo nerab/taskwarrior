@@ -27,7 +27,7 @@ module TaskWarrior
     end
 
     def tasks
-      @tasks #.dup
+      @tasks
     end
 
     def to_s

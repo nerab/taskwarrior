@@ -2,9 +2,12 @@ require 'active_model'
 
 module TaskWarrior
   class Task
-    attr_accessor :description, :id, :entry, :status, :uuid, :project, :dependencies, :parent, :children, :priority
+    attr_accessor :description, :id, :entry, :status, :uuid, 
+                  :project, :dependencies, :parent, :children, 
+                  :priority, :tags, :annotations
 
     include ActiveModel::Validations
+
     validates :description, :id, :entry, :status, :uuid, :presence => true
 
     validates :id, :numericality => { :only_integer => true, :greater_than => 0}
@@ -21,6 +24,7 @@ module TaskWarrior
       :message => "%{value} is not a valid priority"
     }
 
+    include TaskWarrior::Validations
     validate :entry_cannot_be_in_the_future
 
     def initialize(description)
@@ -28,25 +32,11 @@ module TaskWarrior
       @dependencies = []
       @children = []
       @tags = []
-    end
-
-    def tags
-      @tags
+      @annotations = []
     end
 
     def to_s
       "Task '#{description}'".tap{|result| result << " <#{uuid}>" if uuid}
-    end
-
-    private
-    def entry_cannot_be_in_the_future
-      begin
-        if !entry.blank? and entry > DateTime.now
-          errors.add(:entry, "can't be in the future")
-        end
-      rescue
-        errors.add(:entry, "must be comparable to DateTime")
-      end
     end
   end
 end

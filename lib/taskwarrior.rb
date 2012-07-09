@@ -1,12 +1,16 @@
 require "taskwarrior/version"
 
+require "taskwarrior/validations"
+
+require "taskwarrior/repository"
 require "taskwarrior/task"
 require "taskwarrior/project"
 require "taskwarrior/tag"
-require "taskwarrior/repository"
+require "taskwarrior/annotation"
+
 require "taskwarrior/task_mapper"
 require "taskwarrior/priority_mapper"
+require "taskwarrior/annotation_mapper"
 
 module TaskWarrior
-  # Your code goes here...
 end

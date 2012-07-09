@@ -15,107 +15,122 @@ class TestTask < Test::Unit::TestCase
     @task.status = :pending
   end
 
-  def test_task_id_nil
+  def test_id_nil
     @task.id = nil
     assert_invalid(@task)
   end
 
-  def test_task_id_0
+  def test_id_0
     @task.id = 0
     assert_invalid(@task)
   end
 
-  def test_task_uuid_nil
+  def test_uuid_nil
     @task.uuid = nil
     assert_invalid(@task)
   end
 
-  def test_task_uuid_empty
+  def test_uuid_empty
     @task.uuid = ''
     assert_invalid(@task)
   end
 
-  def test_task_uuid_wrong_format
+  def test_uuid_wrong_format
     @task.uuid = 'abcdefg'
     assert_invalid(@task)
   end
 
-  def test_task_entry_nil
+  def test_description
+    assert_equal('foobar', @task.description)
+    assert_valid(@task)
+  end
+
+  def test_description_nil
+    @task.description = nil
+    assert_invalid(@task)
+  end
+
+  def test_description_empty
+    @task.description = ''
+    assert_invalid(@task)
+  end
+
+  def test_entry_nil
     @task.entry = nil
     assert_invalid(@task)
   end
 
-  def test_task_entry_empty
+  def test_entry_empty
     @task.entry = ''
     assert_invalid(@task)
   end
 
-  def test_task_entry_wrong_format
+  def test_entry_wrong_format
     @task.entry = "foobar"
     assert_invalid(@task)
   end
 
-  def test_task_entry_future
+  def test_entry_future
     @task.entry = DateTime.now.advance(:days => 1)
     assert_invalid(@task)
   end
 
-  def test_task_status_nil
+  def test_status_nil
     @task.status = nil
     assert_invalid(@task)
   end
 
-  def test_task_status_empty
+  def test_status_empty
     @task.status = ''
     assert_invalid(@task)
   end
 
-  def test_task_status_unknown_string
+  def test_status_unknown_string
     @task.status = "foobar"
     assert_invalid(@task)
   end
 
-  def test_task_status_unknown_symbol
+  def test_status_unknown_symbol
     @task.status = :foobar
     assert_invalid(@task)
   end
 
-  def test_task_priority_nil
+  def test_priority_nil
     @task.priority = nil
     assert_valid(@task)
   end
 
-  def test_task_priority_empty
+  def test_priority_empty
     @task.priority = ''
     assert_valid(@task)
   end
 
-  def test_task_priority_unknown_string
+  def test_priority_unknown_string
     @task.priority = "foobar"
     assert_invalid(@task)
   end
 
-  def test_task_priority_unknown_symbol
+  def test_priority_unknown_symbol
     @task.priority = :foobar
     assert_invalid(@task)
   end
 
-  def test_task_priority_high
+  def test_priority_high
     @task.priority = :high
     assert_valid(@task)
   end
 
-  def test_task_priority_medium
+  def test_priority_medium
     @task.priority = :medium
     assert_valid(@task)
   end
 
-  def test_task_priority_low
+  def test_priority_low
     @task.priority = :low
     assert_valid(@task)
   end
 
-  def test_task_valid
+  def test_valid
     assert_valid(@task)
   end
 end

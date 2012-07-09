@@ -23,9 +23,9 @@ class TestRepository < Test::Unit::TestCase
     assert_equal('party', one.project.name)
     assert_equal(:pending, one.status)
 
-#    assert_equal(1, one.annotations.size)
-#    assert_equal(DateTime.new('20120629T191534Z'), one.annotations.first.entry)
-#    assert_equal('the 13th looks good', one.annotations.first.entry.description)
+    assert_equal(1, one.annotations.size)
+    assert_equal(DateTime.parse('20120629T191534Z'), one.annotations.first.entry)
+    assert_equal('the 13th looks good', one.annotations.first.description)
   end
 
   def test_child

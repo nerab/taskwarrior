@@ -23,6 +23,7 @@ module TaskWarrior
           t.parent = json['parent'] # Children will be cross-indexed in the repository
           t.priority = PriorityMapper.map(json['priority'])
           json['tags'].each{|tag| t.tags << tag} if json['tags']
+          json['annotations'].each{|annotation| t.annotations << AnnotationMapper.map(annotation)} if json['annotations']
         }
       end
     end
