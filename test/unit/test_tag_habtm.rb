@@ -11,7 +11,7 @@ class TestTagHasAndBelongsToMany < Test::Unit::TestCase
     @deadbeef = TaskWarrior::Tag.new('deadbeef')
     @metasyntactic = TaskWarrior::Tag.new('metasyntactic')
 
-    # We need to do what the repo does - cross-reference manually.
+    # Cross-reference manually like the repo does
     @foo << @lookup_foo
     @lookup_foo.tags << @foo
     @lookup_foo.tags << @metasyntactic

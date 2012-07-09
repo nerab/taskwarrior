@@ -133,4 +133,29 @@ class TestTask < Test::Unit::TestCase
   def test_valid
     assert_valid(@task)
   end
+
+  def test_due_nil
+    @task.due_at = nil
+    assert_valid(@task)
+  end
+
+  def test_due_empty
+    @task.due_at = ''
+    assert_invalid(@task)
+  end
+
+  def test_due_wrong_format
+    @task.due_at = "foobar"
+    assert_invalid(@task)
+  end
+
+  def test_due_future
+    @task.due_at = DateTime.now.advance(:days => 1)
+    assert_valid(@task)
+  end
+
+  def test_due_past
+    @task.due_at = DateTime.now.advance(:days => -1)
+    assert_valid(@task)
+  end
 end

@@ -4,7 +4,8 @@ module TaskWarrior
   class Task
     attr_accessor :description, :id, :entry, :status, :uuid, 
                   :project, :dependencies, :parent, :children, 
-                  :priority, :tags, :annotations
+                  :priority, :tags, :annotations, 
+                  :start_at, :wait_at, :end_at, :due_at
 
     include ActiveModel::Validations
 

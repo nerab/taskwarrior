@@ -24,6 +24,10 @@ module TaskWarrior
           t.priority = PriorityMapper.map(json['priority'])
           json['tags'].each{|tag| t.tags << tag} if json['tags']
           json['annotations'].each{|annotation| t.annotations << AnnotationMapper.map(annotation)} if json['annotations']
+          
+          %w{start wait end due}.each do |datish|
+            t.send("#{datish}_at=", DateTime.parse(json[datish])) if json[datish]
+          end
         }
       end
     end
