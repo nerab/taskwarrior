@@ -20,7 +20,7 @@ Or install it yourself as:
 
 ## Usage
 
-`TaskWarrior::Repository` is the main entry point. It expects an array of JSON objects, typically produced by ``. Technically, anything that can be consumed by `JSON.parse` is fine as long as it follows the format TaskWarrior uses.
+`TaskWarrior::Repository` is the main entry point. It expects an array of JSON objects, typically produced by `task export`. Technically, anything that can be consumed by `JSON.parse` is fine as long as it follows the format TaskWarrior uses.
 
 	# Assuming that a TaskWarrior export was written to a file
 	r = TaskWarrior::Repository.new(File.read('/tmp/task_export.json'))
