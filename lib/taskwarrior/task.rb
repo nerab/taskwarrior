@@ -46,6 +46,9 @@ module TaskWarrior
 
     # other may have the same uuid, but if its attributes differ, it will not be equal
     def eql?(other)
+      # TODO Find a way to call attributes instead of listing them here again
+      # Maybe Virtus?
+      # http://solnic.eu/2012/01/10/ruby-datamapper-status.html
       [:description, :id, :entry, :status, :uuid, 
        :project, :dependencies, :parent, :children, 
        :priority, :tags, :annotations, :start_at, :wait_at, 

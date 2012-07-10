@@ -21,10 +21,6 @@ module TaskWarrior
       "Annotation (#{entry}): #{description}"
     end
 
-    def eql?(other)
-      self == other
-    end
-
     def hash
       entry.hash + description.hash
     end

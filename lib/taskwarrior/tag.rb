@@ -34,10 +34,6 @@ module TaskWarrior
       "Tag: #{name} (#{@tasks.size} tasks)"
     end
 
-    def eql?(other)
-      self == other
-    end
-
     def hash
       name.hash + tasks.hash
     end
