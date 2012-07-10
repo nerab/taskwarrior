@@ -1,5 +1,3 @@
-require 'active_model'
-
 module TaskWarrior
   class Project
     attr_reader :name, :tasks

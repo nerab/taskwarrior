@@ -1,6 +1,3 @@
-require 'active_model'
-require 'date'
-
 module TaskWarrior
   class Annotation
     attr_accessor :entry, :description

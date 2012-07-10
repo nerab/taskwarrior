@@ -1,6 +1,11 @@
+require 'active_model'
+require 'json'
+require 'date'
+
 require "taskwarrior/version"
 
 require "taskwarrior/validations"
+require "taskwarrior/attributes"
 
 require "taskwarrior/repository"
 require "taskwarrior/task"

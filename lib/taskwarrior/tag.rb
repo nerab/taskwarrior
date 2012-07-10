@@ -1,5 +1,3 @@
-require 'active_model'
-
 module TaskWarrior
   class Tag
     attr_reader :name

@@ -1,28 +1,34 @@
-require 'active_model'
-
 module TaskWarrior
   class Task
-    attr_accessor :description, :id, :entry, :status, :uuid, 
-                  :project, :dependencies, :parent, :children, 
-                  :priority, :tags, :annotations, 
-                  :start_at, :wait_at, :end_at, :due_at
+    include TaskWarrior::Attributes
+
+    attributes :description, :id, :entry, :status, :uuid, :project, :dependencies, :parent, :children, 
+               :priority, :tags, :annotations, :start_at, :wait_at, :end_at, :due_at
 
     include ActiveModel::Validations
 
     validates :description, :id, :entry, :status, :uuid, :presence => true
 
-    validates :id, :numericality => { :only_integer => true, :greater_than => 0}
+    validates :id, :numericality => {
+      :only_integer => true, 
+      :greater_than => 0
+    }
 
-    validates :uuid, :format => {:with => /[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}/,
-                                 :message => "'%{value}' does not match the expected format of a UUID"}
+    validates :uuid, :format => {   
+      :with    => /[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}/,
+      :message => "'%{value}' does not match the expected format of a UUID"
+    }
 
-    validates :status, :inclusion => {:in => [:pending, :waiting, :complete], :message => "%{value} is not a valid status"}
+    validates :status, :inclusion => {     
+      :in      => [:pending, :waiting, :complete], 
+      :message => "%{value} is not a valid status"
+    }
 
     validates :priority, :inclusion => {
-      :in => [:high, :medium, :low],
-      :allow_nil => true,
+      :in          => [:high, :medium, :low],
+      :allow_nil   => true,
       :allow_blank => true,
-      :message => "%{value} is not a valid priority"
+      :message     => "%{value} is not a valid priority"
     }
 
     include TaskWarrior::Validations
@@ -46,13 +52,7 @@ module TaskWarrior
 
     # other may have the same uuid, but if its attributes differ, it will not be equal
     def eql?(other)
-      # TODO Find a way to call attributes instead of listing them here again
-      # Maybe Virtus?
-      # http://solnic.eu/2012/01/10/ruby-datamapper-status.html
-      [:description, :id, :entry, :status, :uuid, 
-       :project, :dependencies, :parent, :children, 
-       :priority, :tags, :annotations, :start_at, :wait_at, 
-       :end_at, :due_at].each do |attr|
+      self.class.attributes.each do |attr|
         return false unless send(attr).eql?(other.send(attr))
       end
     end

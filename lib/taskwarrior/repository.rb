@@ -1,5 +1,3 @@
-require 'json'
-
 module TaskWarrior
   class Repository
     def initialize(input)
