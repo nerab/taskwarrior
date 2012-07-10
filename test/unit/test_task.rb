@@ -5,10 +5,11 @@ require 'active_support/core_ext'
 # TODO Add tests for dependencies
 
 class TestTask < Test::Unit::TestCase
+  include TaskWarrior
   include TaskWarrior::Test::Validations
   
   def setup
-    @task = TaskWarrior::Task.new('foobar')
+    @task = Task.new('foobar')
     @task.id = 1
     @task.uuid = '66465716-b08d-41ea-8567-91b988a2bcbf'
     @task.entry = DateTime.now
@@ -181,5 +182,44 @@ class TestTask < Test::Unit::TestCase
   def assert_datish_past(sym)
     @task.send("#{sym}=", DateTime.now.advance(:days => -1))
     assert_valid(@task)
+  end
+
+  def test_equality
+    a1 = Task.new('foo')
+    a2 = Task.new('foo')
+
+    # Tasks are entities, so even with the same attributes, two different objects
+    # must not be treated equal
+    assert_inequality(a1, a2)
+    
+    # But comparing the same thing to itself is fine
+    assert_equal(a1, a1)
+    assert_equal(a2, a2)
+  end
+
+  def test_equality_different_description
+    a1 = Task.new('foo')
+    a2 = Task.new('bar')
+    assert_inequality(a1, a2)
+  end
+
+  def test_equality_different_entry
+    a1 = Task.new('foo')
+    a1.entry = DateTime.now
+
+    a2 = Task.new('foo')
+    a2.entry = DateTime.now.advance(:days => -1)
+
+    assert_inequality(a1, a2)
+  end
+
+  def test_equality_different_description_and_entry
+    a1 = Task.new('foo')
+    a1.entry = DateTime.now
+
+    a2 = Task.new('bar')
+    a2.entry = DateTime.now.advance(:days => -1)
+
+    assert_inequality(a1, a2)
   end
 end
