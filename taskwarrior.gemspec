@@ -15,6 +15,7 @@ Gem::Specification.new do |gem|
   gem.version       = TaskWarrior::VERSION
 
   gem.add_dependency 'activemodel', '~> 3.2'
+  gem.add_dependency 'multi_json', '~> 1.3'
   
   gem.add_development_dependency 'activesupport', '~> 3.2'
   gem.add_development_dependency 'twtest', '~> 0.0.5'
