@@ -46,8 +46,8 @@ class TestRepository < Test::Unit::TestCase
     tags = @repo.tags
     assert_not_nil(tags)
     assert_equal(2, tags.size)
-    assert(tags.include?(Tag.new('finance')))
-    assert(tags.include?(Tag.new('mall')))
+    assert(tags.include?(@repo.tag('finance')))
+    assert(tags.include?(@repo.tag('mall')))
   end
 
   def test_tasks_of_tag_finance

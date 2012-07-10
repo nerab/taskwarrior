@@ -31,7 +31,7 @@ module TaskWarrior
       name.hash + tasks.hash
     end
 
-    # Projects are value objects. They have no identity. 
+    # Projects are value objects. They have no identity.
     # If name and tasks are the same, the projects are identical.
     def ==(other)
       return false unless other.is_a?(Project)

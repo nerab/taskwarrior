@@ -48,10 +48,32 @@ class TestTag < Test::Unit::TestCase
     assert_equal(Tag.new(foo), foo)
   end
 
-  def test_value_object
-    f1 = Tag.new('foo')
-    f2 = Tag.new('foo')
-    assert_not_equal(f1.object_id, f2.object_id)
-    assert_equal(f1, f2)
+  def test_equality
+    a1 = Tag.new('foo')
+    a2 = Tag.new('foo')
+
+    assert_equal(a1, a2)
+  end
+
+  def test_equality_different_name
+    a1 = Tag.new('foo')
+    a2 = Tag.new('bar')
+    assert_inequality(a1, a2)
+  end
+
+  def test_equality_different_tasks
+    a1 = Tag.new('foo')
+    a2 = Tag.new('foo')
+    a2 << TaskWarrior::Task.new('baz')
+
+    assert_inequality(a1, a2)
+  end
+
+  def test_equality_different_name_and_tasks
+    a1 = Tag.new('foo')
+    a2 = Tag.new('bar')
+    a2 << TaskWarrior::Task.new('baz')
+
+    assert_inequality(a1, a2)
   end
 end

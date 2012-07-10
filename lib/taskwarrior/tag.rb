@@ -34,8 +34,19 @@ module TaskWarrior
       "Tag: #{name} (#{@tasks.size} tasks)"
     end
 
+    def eql?(other)
+      self == other
+    end
+
+    def hash
+      name.hash + tasks.hash
+    end
+
+    # Tags are value objects. They have no identity.
+    # If name and tasks are the same, the tags are identical.
     def ==(other)
-      name == other.name
+      return false unless other.is_a?(Tag)
+      name.eql?(other.name) && tasks.eql?(other.tasks)
     end
 
     private

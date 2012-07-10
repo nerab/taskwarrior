@@ -29,7 +29,7 @@ module TaskWarrior
       entry.hash + description.hash
     end
 
-    # Annotations are value objects. They have no identity. 
+    # Annotations are value objects. They have no identity.
     # If entry date and description are the same, the annotations are identical.
     def ==(other)
       return false unless other.is_a?(Annotation)
