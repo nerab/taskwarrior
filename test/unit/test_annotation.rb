@@ -50,4 +50,37 @@ class TestAnnotation < Test::Unit::TestCase
   def test_valid
     assert_valid(@annotation)
   end
+
+  def test_equality
+    a1 = TaskWarrior::Annotation.new('foo')
+    a2 = TaskWarrior::Annotation.new('foo')
+
+    assert_equal(a1, a2)
+  end
+
+  def test_equality_different_description
+    a1 = TaskWarrior::Annotation.new('foo')
+    a2 = TaskWarrior::Annotation.new('bar')
+    assert_inequality(a1, a2)
+  end
+
+  def test_equality_different_entry
+    a1 = TaskWarrior::Annotation.new('foo')
+    a1.entry = DateTime.now
+
+    a2 = TaskWarrior::Annotation.new('foo')
+    a2.entry = DateTime.now.advance(:days => -1)
+
+    assert_inequality(a1, a2)
+  end
+
+  def test_equality_different_description_and_entry
+    a1 = TaskWarrior::Annotation.new('foo')
+    a1.entry = DateTime.now
+
+    a2 = TaskWarrior::Annotation.new('bar')
+    a2.entry = DateTime.now.advance(:days => -1)
+
+    assert_inequality(a1, a2)
+  end
 end

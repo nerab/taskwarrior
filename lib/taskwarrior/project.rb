@@ -23,6 +23,21 @@ module TaskWarrior
       "Project #{name} (#{@tasks.size} tasks)"
     end
 
+    def eql?(other)
+      self == other
+    end
+
+    def hash
+      name.hash + tasks.hash
+    end
+
+    # Projects are value objects. They have no identity. 
+    # If name and tasks are the same, the projects are identical.
+    def ==(other)
+      return false unless other.is_a?(Project)
+      name.eql?(other.name) && tasks.eql?(other.tasks)
+    end
+
     private
     def name_may_not_contain_spaces
       if !name.blank? and name[/\s/]

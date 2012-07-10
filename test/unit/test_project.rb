@@ -52,4 +52,31 @@ class TestProject < Test::Unit::TestCase
     assert_equal(project, t1.project)
     assert_equal(project, t2.project)
   end
+
+  def test_equality
+    a1 = TaskWarrior::Project.new('foo')
+    a2 = TaskWarrior::Project.new('foo')
+
+    assert_equal(a1, a2)
+  end
+
+  def test_equality_different_name
+    a1 = TaskWarrior::Project.new('foo')
+    a2 = TaskWarrior::Project.new('bar')
+    assert_inequality(a1, a2)
+  end
+
+  def test_equality_different_tasks
+    a1 = TaskWarrior::Project.new('foo')
+    a2 = TaskWarrior::Project.new('foo', [TaskWarrior::Task.new('foobar')])
+
+    assert_inequality(a1, a2)
+  end
+
+  def test_equality_different_name_and_tasks
+    a1 = TaskWarrior::Project.new('foo')
+    a2 = TaskWarrior::Project.new('bar', [TaskWarrior::Task.new('baz')])
+
+    assert_inequality(a1, a2)
+  end
 end
