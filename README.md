@@ -18,6 +18,10 @@ Or install it yourself as:
 
     $ gem install taskwarrior
 
+## Platforms
+
+This gem is tested on Ruby 1.9.3. Please see the [build status](http://travis-ci.org/nerab/taskwarrior) for the status of other rubies.
+
 ## Usage
 
 `TaskWarrior::Repository` is the main entry point. It expects an array of JSON objects, typically produced by `task export`. Technically, anything that can be consumed by `JSON.parse` is fine as long as it follows the format TaskWarrior uses.
