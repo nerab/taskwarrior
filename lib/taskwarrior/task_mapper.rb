@@ -33,11 +33,22 @@ module TaskWarrior
 
       def dump(task)
         {}.tap do |h|
+          h['description'] = task.description
           h['id'] = task.id
           h['uuid'] = task.uuid
-          h['description'] = task.description
           h['entry'] = task.entry.to_s
           h['status'] = task.status
+          h['project'] = task.project.name if task.project
+          h['depends'] = task.dependencies.map{|d| d.uuid} if task.dependencies.any?
+
+          # TODO h['parent']
+          # TODO h['priority']
+          # TODO h['tags']
+          # TODO h['annotations']
+          # TODO h['start_at']
+          # TODO h['wait_at']
+          # TODO h['end_at']
+          # TODO h['due_at']
         end
       end
     end

@@ -5,7 +5,7 @@ class TestRepository < Test::Unit::TestCase
   include TaskWarrior::Test::Fixtures
 
   def setup
-    @repo = Repository.new
+    @repo = TaskRepository.new
     @repo.load(File.read(fixture('party_taxes.json')))
   end
 

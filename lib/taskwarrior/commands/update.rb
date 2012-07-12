@@ -1,11 +1,11 @@
 module TaskWarrior
   module Commands
-    class Update
+    class Update < Command
       def initialize(task)
       end
 
-      def execute
-        raise "Update not supported"
+      def run
+        raise "Not yet implemented"
       end
     end
   end

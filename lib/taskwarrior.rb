@@ -7,7 +7,7 @@ require "taskwarrior/version"
 require "taskwarrior/validations"
 require "taskwarrior/attributes"
 
-require "taskwarrior/repository"
+require "taskwarrior/task_repository"
 require "taskwarrior/commands"
 
 require "taskwarrior/task"

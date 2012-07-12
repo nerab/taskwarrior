@@ -1,11 +1,13 @@
 module TaskWarrior
   module Commands
-    class Delete < Command
+    class Create < Command
       def initialize(task)
+        super()
+        @task = task
       end
 
       def run
-        raise "Not yet implemented"
+        import(TaskMapper.dump(@task))
       end
     end
   end
