@@ -33,7 +33,7 @@ module TaskWarrior
     end
 
     def all
-      find(nil)
+      find('')
     end
 
     # direct lookup by uuid

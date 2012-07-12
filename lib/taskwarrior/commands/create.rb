@@ -7,7 +7,7 @@ module TaskWarrior
       end
 
       def run
-        import(TaskMapper.dump(@task))
+        import(MultiJson.dump(TaskMapper.dump(@task)))
       end
     end
   end

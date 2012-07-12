@@ -13,9 +13,9 @@ class TestRepositorySave < Test::Unit::TestCase
 #    assert_equal(0, @repo.tags.size)
 
     task = Task.new('foo equals bar')
-#    @repo.save(task)
+    @repo.save(task)
 
-#    assert_equal(1, @repo.all.size)
+    assert_equal(1, @repo.all.size)
 #    assert_equal(0, @repo.projects.size)
 #    assert_equal(0, @repo.tags.size)
   end
