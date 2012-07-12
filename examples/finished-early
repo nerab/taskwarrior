@@ -10,7 +10,8 @@
 
 require 'taskwarrior'
 
-r = TaskWarrior::Repository.new(ARGF.read)
+r = TaskWarrior::Repository.new
+r.load(ARGF.read)
 
 selected = r.tasks.select do |t|
   t.status == :completed && t.due_at > t.end_at if t.due_at && t.end_at

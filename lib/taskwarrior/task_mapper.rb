@@ -4,7 +4,7 @@ module TaskWarrior
   #
   class TaskMapper
     class << self
-      def map(json)
+      def load(json)
         Task.new(json['description']).tap{|t|
           t.id = json['id'].to_i
           t.uuid = json['uuid']
@@ -21,14 +21,24 @@ module TaskWarrior
           end
 
           t.parent = json['parent'] # Children will be cross-indexed in the repository
-          t.priority = PriorityMapper.map(json['priority'])
+          t.priority = PriorityMapper.load(json['priority'])
           json['tags'].each{|tag| t.tags << tag} if json['tags']
-          json['annotations'].each{|annotation| t.annotations << AnnotationMapper.map(annotation)} if json['annotations']
-          
+          json['annotations'].each{|annotation| t.annotations << AnnotationMapper.load(annotation)} if json['annotations']
+
           %w{start wait end due}.each do |datish|
             t.send("#{datish}_at=", DateTime.parse(json[datish])) if json[datish]
           end
         }
+      end
+
+      def dump(task)
+        {}.tap do |h|
+          h['id'] = task.id
+          h['uuid'] = task.uuid
+          h['description'] = task.description
+          h['entry'] = task.entry.to_s
+          h['status'] = task.status
+        end
       end
     end
   end

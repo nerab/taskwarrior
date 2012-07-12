@@ -4,7 +4,7 @@ module TaskWarrior
   #
   class AnnotationMapper
     class << self
-      def map(json)
+      def load(json)
         Annotation.new(json['description']).tap{|t|
           t.entry = DateTime.parse(json['entry'])
         }

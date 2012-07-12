@@ -1,12 +1,14 @@
 module TaskWarrior
   class Repository
-    def initialize(input)
+    def initialize
       @tasks = {}
       @projects = Hash.new{|hash, key| hash[key] = Project.new(key)}
       @tags = Hash.new{|hash, key| hash[key] = Tag.new(key)}
+    end
 
+    def load(input)
       MultiJson.load(input).each{|json|
-        task = TaskWarrior::TaskMapper.map(json)
+        task = TaskMapper.load(json)
         @tasks[task.uuid] = task
         @projects[task.project].tasks << task if task.project
 
@@ -31,6 +33,30 @@ module TaskWarrior
           end
         end
       end
+    end
+
+    def dump
+      MultiJson.dump(
+        @tasks.map do |uuid, task|
+          TaskMapper.dump(task)
+        end
+      )
+    end
+
+    def save(task)
+      if @tasks[task.uuid]
+        cmd = Commands::Update.new(task)
+      else
+        cmd = Commands::Insert.new(task)
+      end
+
+      cmd.execute
+      @tasks[task.uuid] = task
+    end
+
+    def delete(task)
+      Commands::Delete.new(task).execute if @tasks[task.uuid]
+      @tasks[task.uuid] = nil
     end
 
     def tasks

@@ -27,7 +27,8 @@ This gem is tested on Ruby 1.9.3. Please see the [build status](http://travis-ci
 `TaskWarrior::Repository` is the main entry point. It expects an array of JSON objects, typically produced by `task export`. Technically, anything that can be consumed by `JSON.parse` is fine as long as it follows the format TaskWarrior uses.
 
 	# Assuming that a TaskWarrior export was written to a file
-	r = TaskWarrior::Repository.new(File.read('/tmp/task_export.json'))
+	r = TaskWarrior::Repository.new
+	r.load(File.read('/tmp/task_export.json'))
 
 Once instantiated, the repository provides access to tasks, projects and tags. Each task will also carry its attributes (description, uuid, etc) as well as its project and tags.
 

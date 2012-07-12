@@ -8,6 +8,8 @@ require "taskwarrior/validations"
 require "taskwarrior/attributes"
 
 require "taskwarrior/repository"
+require "taskwarrior/commands"
+
 require "taskwarrior/task"
 require "taskwarrior/project"
 require "taskwarrior/tag"

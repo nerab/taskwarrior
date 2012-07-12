@@ -1,7 +1,7 @@
 module TaskWarrior
   class PriorityMapper
     class << self
-      def map(json)
+      def load(json)
         {'H' => :high, 'M' => :medium, 'L' => :low}[json]
       end
     end
