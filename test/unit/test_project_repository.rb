@@ -8,10 +8,10 @@ class TestProjectRepository < Test::Unit::TestCase
     super
 
     @projects = ProjectRepository.new
-    assert_equal(0, @repo.all.size)
+    assert_equal(0, @projects.all.size)
     cmd = Commands::Import.new(File.new(fixture('party_taxes.json')))
     cmd.run
-    assert_equal(8, @repo.all.size)
+    assert_equal(1, @projects.all.size)
   end
 
   def test_projects
@@ -21,12 +21,13 @@ class TestProjectRepository < Test::Unit::TestCase
   end
 
   def test_equality
-    t1 = @repo['b587f364-c68e-4438-b4d6-f2af6ad62518']
+    t1 = @projects['party']
     t2 = t1.dup
     assert_not_equal(t1.object_id, t2.object_id)
 
-    t1.description = 'changed'
-    assert_equal(t1, t2)
-    assert(!(t1.eql?(t2)))
+    # TODO Re-enable once projects support write operations (see Task)
+    # t1.name = 'less_taxes'
+    # assert_equal(t1, t2)
+    # assert(!(t1.eql?(t2)))
   end
 end

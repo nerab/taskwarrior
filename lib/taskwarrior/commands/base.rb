@@ -20,7 +20,7 @@ module TaskWarrior
           #
           # Concept:
           #   cat <(echo {"one":"two"})
-          # 
+          #
           # This should actually be working, but apparently Ruby's +system+ command cannot handle process substitution
           #
           #   task('import', ["<(echo #{json})"])
@@ -60,6 +60,7 @@ module TaskWarrior
 
           # clean up
           line.reject!{|part| part.empty?}
+#STDERR.puts line.join(' ')
         }.join(' ')
       end
     end

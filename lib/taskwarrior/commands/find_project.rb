@@ -9,7 +9,9 @@ module TaskWarrior
       end
 
       def run
-        task('_projects', ["project:#{@name}", 'rc.verbose=nothing'])
+        args = ['rc.verbose=nothing']
+        args << "project:#{@name}" unless @name.blank?
+        task('_projects', args)
       end
     end
   end
