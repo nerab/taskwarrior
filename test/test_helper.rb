@@ -1,6 +1,17 @@
 require 'twtest'
 require 'taskwarrior'
 
+class Test::Unit::TestCase
+  def setup
+    @data_dir = Dir.mktmpdir
+    ENV['TASKDATA'] = @data_dir
+  end
+
+  def teardown
+    FileUtils.rm_r(@data_dir) if @data_dir && Dir.exist?(@data_dir)
+  end
+end
+
 module TaskWarrior
   module Test
     module Fixtures
@@ -8,7 +19,7 @@ module TaskWarrior
         File.join(File.dirname(__FILE__), 'fixtures', name)
       end
     end
-    
+
     module Validations
       def assert_valid(task)
         assert(task.valid?, error_message(task.errors))
