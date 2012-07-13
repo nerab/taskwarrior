@@ -5,6 +5,7 @@ require "taskwarrior/commands/read_task"
 require "taskwarrior/commands/update_task"
 require "taskwarrior/commands/delete_task"
 require "taskwarrior/commands/find_task"
+require "taskwarrior/commands/find_tasks_by_project"
 
 require "taskwarrior/commands/find_project"
 

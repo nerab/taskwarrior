@@ -1,7 +1,6 @@
 module TaskWarrior
   class TaskRepository
     def initialize
-      @projects = ProjectRepository.new
       # TODO Move this to TagRepository
       # @tags = Hash.new{|hash, key| hash[key] = Tag.new(key)}
     end
@@ -38,6 +37,16 @@ module TaskWarrior
       load(Commands::ReadTask.new(uuid).run).first
     end
 
+    def find_by_project(project_or_name)
+      if project_or_name.respond_to?(:name)
+        term = project_or_name.name
+      else
+        term = project_or_name
+      end
+
+      load(Commands::FindTasksByProject.new(term).run).reject{|t| t.parent} # Do not expose child tasks directly
+    end
+
     private
 
     #
@@ -47,13 +56,13 @@ module TaskWarrior
       return [] if input.blank?
 
       tasks = {}
+      projects = ProjectRepository.new
 
       MultiJson.load(input).each{|json|
         task = TaskMapper.load(json)
         tasks[task.uuid] = task
 
-        # TODO Probably not required anymore, or move it to ProjectRepository
-        # @projects[task.project].tasks << task if task.project
+        projects[task.project].tasks << task if task.project
 
         # Create a new Tag object in @tags that is the value for each tag name
         # TODO Move this to TagRepository
@@ -64,7 +73,7 @@ module TaskWarrior
       tasks.each_value{|task| task.dependencies.map!{|uuid| tasks[uuid]}}
 
       # Replace the project property of each task with a proper Project object carrying a name and all of the project's tasks
-      tasks.each_value{|task| task.project = @projects[task.project] if task.project}
+      tasks.each_value{|task| task.project = projects[task.project] if task.project}
 
       # Add child tasks to their parent, but keep them in the global index
       tasks.each_value do |task|

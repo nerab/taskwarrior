@@ -35,18 +35,24 @@ module TaskWarrior
     private
 
     #
-    # Loads multiple projects from their JSON representation
+    # Loads multiple projects; one line is one project
     #
     def load(input)
       return [] if input.blank?
 
-      projects = []
+      projects = {}
+      tasks = TaskRepository.new
 
-      input.each_line{|name|
-        projects << ProjectMapper.load(name)
-      }
+      input.each_line do |name|
+        projects[name] = ProjectMapper.load(name)
+      end
 
-      projects
+      # add tasks to each project
+      projects.each_value do |project|
+#        project.tasks.concat(tasks.find_by_project(project))
+      end
+
+      projects.values
     end
   end
 end
