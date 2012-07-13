@@ -7,7 +7,7 @@ class TestRepository < Test::Unit::TestCase
   def setup
     @data_dir = Dir.mktmpdir
     ENV['TASKDATA'] = @data_dir
-    
+
     @repo = TaskRepository.new
     assert_equal(0, @repo.all.size)
     cmd = Commands::Import.new(File.new(fixture('party_taxes.json')))
@@ -18,7 +18,6 @@ class TestRepository < Test::Unit::TestCase
   def teardown
     FileUtils.rm_r(@data_dir) if @data_dir && Dir.exist?(@data_dir)
   end
-
 
   def test_tags_of_task
     atm = @repo['67aafe0b-ddd7-482b-9cfa-ac42c43e7559']

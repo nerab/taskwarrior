@@ -14,7 +14,7 @@ module TaskWarrior
 
       def import(json_or_file)
         if json_or_file.respond_to?(:path)
-          task("import #{json_or_file.path}")
+          task('import', json_or_file.path)
         else
           # It's a JSON string. Convert it to something the task command can understand => a file name.
           #
@@ -32,7 +32,7 @@ module TaskWarrior
           begin
             file.write(json_or_file)
             file.flush
-            task("import #{file.path}")
+            task('import', file.path)
           ensure
             file.close!
           end

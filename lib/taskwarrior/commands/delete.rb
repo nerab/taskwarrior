@@ -2,10 +2,11 @@ module TaskWarrior
   module Commands
     class Delete < Command
       def initialize(task)
+        @task = task
       end
 
       def run
-        raise "Not yet implemented"
+        task("#{@task.uuid} delete", "rc.confirmation=no")
       end
     end
   end

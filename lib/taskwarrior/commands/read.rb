@@ -5,11 +5,11 @@ module TaskWarrior
     #
     class Read < Command
       def initialize(uuid)
+        @uuid = uuid
       end
 
       def run
-        raise "Not yet implemented"
-        # task #{@uuid} export
+        export(@uuid)
       end
     end
   end

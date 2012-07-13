@@ -29,7 +29,7 @@ module TaskWarrior
     end
 
     def find(term)
-      load(Commands::Find.new(term).run)
+      find_with_parent(term).reject{|t| t.parent} # Do not expose child tasks directly      
     end
 
     def all
@@ -38,12 +38,14 @@ module TaskWarrior
 
     # direct lookup by uuid
     def [](uuid)
-      Commands::Read.new(uuid).run
+      load(Commands::Read.new(uuid).run).first
     end
-
 
     private
 
+    def find_with_parent(term)
+      load(Commands::Find.new(term).run)
+    end
     #
     # Loads multiple tasks from their JSON representation
     #
@@ -74,7 +76,7 @@ module TaskWarrior
       # Add child tasks to their parent, but keep them in the global index
       tasks.each_value do |task|
         if task.parent
-          parent = tasks[task.parent]
+          parent = self[task.parent] #tasks[task.parent]
 
           if parent # we know the parent
             parent.children << task

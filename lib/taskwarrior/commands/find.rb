@@ -15,9 +15,6 @@ module TaskWarrior
       #
       def run
         export(@term)
-
-        # TODO Do not expose child tasks directly
-        # @tasks.values.reject{|t| t.parent}
       end
     end
   end
