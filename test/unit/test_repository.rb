@@ -6,7 +6,10 @@ class TestRepository < Test::Unit::TestCase
 
   def setup
     @repo = TaskRepository.new
-    @repo.load(File.read(fixture('party_taxes.json')))
+    assert_equal(0, @repo.all.size)
+    cmd = Commands::Import(fixture('party_taxes.json')).new
+    cmd.run
+    assert_equal(8, @repo.all.size)
   end
 
   def test_tags_of_task
@@ -16,8 +19,6 @@ class TestRepository < Test::Unit::TestCase
   end
 
   def test_all
-    assert_equal(8, @repo.tasks.size)
-
     one = @repo['6fd0ba4a-ab67-49cd-ac69-64aa999aff8a']
     assert_equal('Select a free weekend in November', one.description)
     assert_equal(:high, one.priority)
