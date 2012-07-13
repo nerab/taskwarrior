@@ -1,11 +1,11 @@
 module TaskWarrior
   class TaskRepository
-=begin
     def initialize
+      @projects = ProjectRepository.new
       # TODO Move this to TagRepository
-      @tags = Hash.new{|hash, key| hash[key] = Tag.new(key)}
+      # @tags = Hash.new{|hash, key| hash[key] = Tag.new(key)}
     end
-=end
+
     #
     # Saves a single task in the database
     #
@@ -52,8 +52,8 @@ module TaskWarrior
         task = TaskMapper.load(json)
         tasks[task.uuid] = task
 
-        # TODO Move this to ProjectRepository
-        #@projects[task.project].tasks << task if task.project
+        # TODO Probably not required anymore, or move it to ProjectRepository
+        # @projects[task.project].tasks << task if task.project
 
         # Create a new Tag object in @tags that is the value for each tag name
         # TODO Move this to TagRepository
@@ -64,8 +64,7 @@ module TaskWarrior
       tasks.each_value{|task| task.dependencies.map!{|uuid| tasks[uuid]}}
 
       # Replace the project property of each task with a proper Project object carrying a name and all of the project's tasks
-      # TODO Move this to ProjectRepository
-      #@tasks.each_value{|task| task.project = @projects[task.project] if task.project}
+      tasks.each_value{|task| task.project = @projects[task.project] if task.project}
 
       # Add child tasks to their parent, but keep them in the global index
       tasks.each_value do |task|

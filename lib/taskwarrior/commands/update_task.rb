@@ -11,6 +11,8 @@ module TaskWarrior
         # does not seem to work as TaskWarrior only marks tasks as deleted, but
         # keeps them including the uuid.
         #
+        # We also need to save changed tags and project of the task.
+        #
         raise "Not yet implemented"
       end
     end
