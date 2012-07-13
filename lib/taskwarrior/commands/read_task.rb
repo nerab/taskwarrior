@@ -3,7 +3,7 @@ module TaskWarrior
     #
     # Read a single task, identified by +uuid+, from the database
     #
-    class Read < Command
+    class ReadTask < Command
       def initialize(uuid)
         @uuid = uuid
       end

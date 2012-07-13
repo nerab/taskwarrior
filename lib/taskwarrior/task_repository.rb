@@ -2,9 +2,6 @@ module TaskWarrior
   class TaskRepository
 =begin
     def initialize
-      # TODO Move this to ProjectRepository
-      @projects = Hash.new{|hash, key| hash[key] = Project.new(key)}
-
       # TODO Move this to TagRepository
       @tags = Hash.new{|hash, key| hash[key] = Tag.new(key)}
     end
@@ -16,20 +13,20 @@ module TaskWarrior
       #TODO raise ValidationError unless task.valid?
 
       if find(task.uuid).any?
-        cmd = Commands::Update.new(task)
+        cmd = Commands::UpdateTask.new(task)
       else
-        cmd = Commands::Create.new(task)
+        cmd = Commands::CreateTask.new(task)
       end
 
       cmd.run
     end
 
     def delete(task)
-      Commands::Delete.new(task).run
+      Commands::DeleteTask.new(task).run
     end
 
     def find(term)
-      find_with_parent(term).reject{|t| t.parent} # Do not expose child tasks directly      
+      load(Commands::FindTask.new(term).run).reject{|t| t.parent} # Do not expose child tasks directly
     end
 
     def all
@@ -38,14 +35,11 @@ module TaskWarrior
 
     # direct lookup by uuid
     def [](uuid)
-      load(Commands::Read.new(uuid).run).first
+      load(Commands::ReadTask.new(uuid).run).first
     end
 
     private
 
-    def find_with_parent(term)
-      load(Commands::Find.new(term).run)
-    end
     #
     # Loads multiple tasks from their JSON representation
     #
@@ -89,16 +83,6 @@ module TaskWarrior
     end
 
 =begin
-    # TODO Move this to ProjectRepository#all
-    def projects
-      @projects.values
-    end
-
-    # TODO Move this to ProjectRepository#[](name)
-    def project(name)
-      @projects[name] if @projects.has_key?(name)
-    end
-
     # TODO Move this to TagRepository#all
     def tags
       @tags.values

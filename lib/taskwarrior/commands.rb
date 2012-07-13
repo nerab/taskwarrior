@@ -1,9 +1,11 @@
 require "taskwarrior/commands/base"
-require "taskwarrior/commands/create"
-require "taskwarrior/commands/read"
-require "taskwarrior/commands/update"
-require "taskwarrior/commands/delete"
-require "taskwarrior/commands/find"
+
+require "taskwarrior/commands/create_project"
+require "taskwarrior/commands/read_project"
+require "taskwarrior/commands/update_project"
+require "taskwarrior/commands/delete_project"
+require "taskwarrior/commands/find_project"
+
 require "taskwarrior/commands/import"
 
 module TaskWarrior

@@ -24,7 +24,7 @@ class TestTaskRepository < Test::Unit::TestCase
     one = @tasks['6fd0ba4a-ab67-49cd-ac69-64aa999aff8a']
     assert_equal('Select a free weekend in November', one.description)
     assert_equal(:high, one.priority)
-#    assert_equal('party', one.project.name)
+    assert_equal('party', one.project.name)
     assert_equal(:pending, one.status)
 
     assert_equal(1, one.annotations.size)
@@ -48,5 +48,12 @@ class TestTaskRepository < Test::Unit::TestCase
     t1.description = 'changed'
     assert_equal(t1, t2)
     assert(!(t1.eql?(t2)))
+  end
+
+  def test_save_plain
+    old_size = @tasks.all.size
+    task = Task.new('foo equals bar')
+    @tasks.save(task)
+    assert_equal(old_size + 1, @tasks.all.size)
   end
 end

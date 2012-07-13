@@ -1,6 +1,6 @@
 module TaskWarrior
   module Commands
-    class Create < Command
+    class CreateTask < Command
       def initialize(task)
         super()
         @task = task

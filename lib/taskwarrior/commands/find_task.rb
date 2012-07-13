@@ -3,7 +3,7 @@ module TaskWarrior
     #
     # Find tasks in the database
     #
-    class Find < Command
+    class FindTask < Command
       def initialize(term)
         super()
         @term = term

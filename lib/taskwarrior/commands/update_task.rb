@@ -1,6 +1,6 @@
 module TaskWarrior
   module Commands
-    class Update < Command
+    class UpdateTask < Command
       def initialize(task)
       end
 

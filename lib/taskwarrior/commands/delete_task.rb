@@ -1,6 +1,6 @@
 module TaskWarrior
   module Commands
-    class Delete < Command
+    class DeleteTask < Command
       def initialize(task)
         @task = task
       end
