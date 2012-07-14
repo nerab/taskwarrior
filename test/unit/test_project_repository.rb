@@ -25,7 +25,7 @@ class TestProjectRepository < Test::Unit::TestCase
     t2 = t1.dup
     assert_not_equal(t1.object_id, t2.object_id)
 
-    # TODO Re-enable once projects support write operations (see Task)
+    skip('Re-enable once projects support write operations (see Task)')
     # t1.name = 'less_taxes'
     # assert_equal(t1, t2)
     # assert(!(t1.eql?(t2)))

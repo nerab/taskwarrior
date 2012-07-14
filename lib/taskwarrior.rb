@@ -20,4 +20,24 @@ require "taskwarrior/annotation"
 require "taskwarrior/mappers"
 
 module TaskWarrior
+  #
+  # Static, global access to the project repository
+  #
+  def self.projects
+    @projects ||= ProjectRepository.new
+  end
+
+  #
+  # Static, global access to the task repository
+  #
+  def self.tasks
+    @tasks ||= TaskRepository.new
+  end
+
+  #
+  # Static, global access to the tag repository
+  #
+  def self.tags
+    @tasks ||= TagRepository.new
+  end
 end

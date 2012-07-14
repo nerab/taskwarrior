@@ -9,8 +9,7 @@ class TestTaskRepository < Test::Unit::TestCase
 
     @tasks = TaskRepository.new
     assert_equal(0, @tasks.all.size)
-    cmd = Commands::Import.new(File.new(fixture('party_taxes.json')))
-    cmd.run
+    Commands::Import.new(File.new(fixture('party_taxes.json'))).run
     assert_equal(8, @tasks.all.size)
   end
 
@@ -33,6 +32,7 @@ class TestTaskRepository < Test::Unit::TestCase
   end
 
   def test_child
+    skip('TBD')
     assert_equal(1, @tasks['b587f364-c68e-4438-b4d6-f2af6ad62518'].children.size)
   end
 
@@ -55,5 +55,19 @@ class TestTaskRepository < Test::Unit::TestCase
     task = Task.new('foo equals bar')
     @tasks.save(task)
     assert_equal(old_size + 1, @tasks.all.size)
+  end
+
+  def test_find_by_project
+    one = @tasks['6fd0ba4a-ab67-49cd-ac69-64aa999aff8a']
+    party = one.project
+    party_tasks = @tasks.find_by_project(party)
+    assert_equal(6, party_tasks.size)
+    assert_equal(6, party.tasks.size)
+
+    party_tasks.each do |task|
+      assert_equal(party.tasks, task.project.tasks)
+      assert_equal(party.name, task.project.name)
+      assert_equal(party, task.project)
+    end
   end
 end

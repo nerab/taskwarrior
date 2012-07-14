@@ -4,8 +4,10 @@ module TaskWarrior
   #
   class ProjectMapper
     class << self
-      def load(name)
-        Project.new(name)
+      def load(name, load_tasks = true)
+        Project.new(name).tap do |p|
+          p.tasks.concat(TaskWarrior.tasks.find_by_project(p, false)) if load_tasks
+        end
       end
     end
   end

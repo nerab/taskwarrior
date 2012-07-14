@@ -58,6 +58,12 @@ class TestProject < Test::Unit::TestCase
     a2 = TaskWarrior::Project.new('foo')
 
     assert_equal(a1, a2)
+
+    foobar = TaskWarrior::Task.new('foobar')
+    a1.tasks << foobar
+    a2.tasks << foobar
+
+    assert_equal(a1, a2)
   end
 
   def test_equality_different_name

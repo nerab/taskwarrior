@@ -27,6 +27,10 @@ module TaskWarrior
       find('')
     end
 
+    def size
+      all.size
+    end
+
     # direct lookup by name
     def [](name)
       find(name).first
@@ -41,15 +45,9 @@ module TaskWarrior
       return [] if input.blank?
 
       projects = {}
-      tasks = TaskRepository.new
 
       input.each_line do |name|
         projects[name] = ProjectMapper.load(name)
-      end
-
-      # add tasks to each project
-      projects.each_value do |project|
-#        project.tasks.concat(tasks.find_by_project(project))
       end
 
       projects.values

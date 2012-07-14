@@ -21,6 +21,12 @@ module TaskWarrior
       "Project #{name} (#{@tasks.size} tasks)"
     end
 
+=begin
+    def eql?(other)
+      self == other
+    end
+=end
+
     def hash
       name.hash + tasks.hash
     end
@@ -29,7 +35,7 @@ module TaskWarrior
     # If name and tasks are the same, the projects are identical.
     def ==(other)
       return false unless other.is_a?(Project)
-      name.eql?(other.name) && tasks.eql?(other.tasks)
+      name == other.name && tasks == other.tasks
     end
 
     private

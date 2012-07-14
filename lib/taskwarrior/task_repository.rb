@@ -1,10 +1,5 @@
 module TaskWarrior
   class TaskRepository
-    def initialize
-      # TODO Move this to TagRepository
-      # @tags = Hash.new{|hash, key| hash[key] = Tag.new(key)}
-    end
-
     #
     # Saves a single task in the database
     #
@@ -32,19 +27,26 @@ module TaskWarrior
       find('')
     end
 
-    # direct lookup by uuid
+    def size
+      all.size
+    end
+
+    # Lookup a task by its uuid. Returns exactly one object - either the task identified by +uuid+ or nil.
     def [](uuid)
       load(Commands::ReadTask.new(uuid).run).first
     end
 
-    def find_by_project(project_or_name)
+    #
+    # Find all tasks belonging to +project_or_name+
+    #
+    def find_by_project(project_or_name, load_projects = true)
       if project_or_name.respond_to?(:name)
         term = project_or_name.name
       else
         term = project_or_name
       end
 
-      load(Commands::FindTasksByProject.new(term).run).reject{|t| t.parent} # Do not expose child tasks directly
+      load(Commands::FindTasksByProject.new(term).run, load_projects).reject{|t| t.parent} # Do not expose child tasks directly
     end
 
     private
@@ -52,17 +54,16 @@ module TaskWarrior
     #
     # Loads multiple tasks from their JSON representation
     #
-    def load(input)
+    def load(input, load_projects = true)
       return [] if input.blank?
 
       tasks = {}
-      projects = ProjectRepository.new
 
       MultiJson.load(input).each{|json|
         task = TaskMapper.load(json)
         tasks[task.uuid] = task
 
-        projects[task.project].tasks << task if task.project
+        # projects[task.project].tasks << task if task.project
 
         # Create a new Tag object in @tags that is the value for each tag name
         # TODO Move this to TagRepository
@@ -73,7 +74,7 @@ module TaskWarrior
       tasks.each_value{|task| task.dependencies.map!{|uuid| tasks[uuid]}}
 
       # Replace the project property of each task with a proper Project object carrying a name and all of the project's tasks
-      tasks.each_value{|task| task.project = projects[task.project] if task.project}
+      tasks.each_value{|task| task.project = TaskWarrior.projects[task.project] if task.project } if load_projects
 
       # Add child tasks to their parent, but keep them in the global index
       tasks.each_value do |task|
