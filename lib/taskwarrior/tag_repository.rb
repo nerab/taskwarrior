@@ -43,7 +43,8 @@ module TaskWarrior
     #
     def load(input)
       return [] if input.blank?
-
+      input.lines.map{|name| TagMapper.load(name)}
+=begin
       tags = {}
 
       input.each_line do |name|
@@ -51,6 +52,7 @@ module TaskWarrior
       end
 
       tags.values
+=end
     end
   end
 end

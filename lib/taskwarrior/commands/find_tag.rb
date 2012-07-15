@@ -4,8 +4,8 @@ module TaskWarrior
     # Find one or more tags by name
     #
     class FindTag < Command
-      def initialize(name)
-        @name = name
+      def initialize(tag_name)
+        @name = tag_name
       end
 
       def run

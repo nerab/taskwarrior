@@ -7,20 +7,20 @@ class TestRepositoryLoad < MiniTest::Unit::TestCase
   def test_empty
     assert_equal(0, TaskWarrior.tasks.size)
     assert_equal(0, TaskWarrior.projects.size)
-    assert_equal(0, TaskWarrior.tags.size)
+    assert_equal(4, TaskWarrior.tags.size)
   end
 
   def test_different_projects_tags
     Commands::Import.new(File.new(fixture('party_taxes.json'))).run
     assert_equal(8, TaskWarrior.tasks.size)
     assert_equal(1, TaskWarrior.projects.size)
-    assert_equal(2, TaskWarrior.tags.size)
+    assert_equal(6, TaskWarrior.tags.size)
   end
 
   def test_different_projects_tags_no_deps
     Commands::Import.new(File.new(fixture('no_deps.json'))).run
     assert_equal(6, TaskWarrior.tasks.size)
     assert_equal(1, TaskWarrior.projects.size)
-    assert_equal(1, TaskWarrior.tags.size)
+    assert_equal(5, TaskWarrior.tags.size)
   end
 end

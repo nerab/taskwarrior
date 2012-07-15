@@ -6,7 +6,7 @@ module TaskWarrior
     class << self
       def load(name, load_tasks = true)
         Tag.new(name).tap do |t|
-          t.tasks.concat(TaskWarrior.tasks.find_by_tag(t, false)) if load_tasks
+          t.tasks.concat(TaskWarrior.tasks.find_by_tag(t.name, false)) if load_tasks
         end
       end
     end

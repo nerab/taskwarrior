@@ -39,6 +39,6 @@ module TaskWarrior
   # Static, global access to the tag repository
   #
   def self.tags
-    @tasks ||= TagRepository.new
+    @tags ||= TagRepository.new
   end
 end

@@ -46,7 +46,7 @@ module TaskWarrior
         term = project_or_name
       end
 
-      load(Commands::FindTasksByProject.new(term).run, :load_projects => load_projects).reject{|t| t.parent} # Do not expose child tasks directly
+      load(Commands::FindTasksByProject.new(term).run, :load_projects => load_projects, :load_tags => false).reject{|t| t.parent} # Do not expose child tasks directly
     end
 
     #
@@ -59,7 +59,7 @@ module TaskWarrior
         term = tag_or_name
       end
 
-      load(Commands::FindTasksByTag.new(term).run, :load_tags => load_tags).reject{|t| t.parent} # Do not expose child tasks directly
+      load(Commands::FindTasksByTag.new(term).run, :load_projects => false, :load_tags => load_tags).reject{|t| t.parent} # Do not expose child tasks directly
     end
 
     private
@@ -87,8 +87,9 @@ module TaskWarrior
       # Replace the project property of each task with a proper Project object carrying a name and all of the project's tasks
       if options[:load_tags]
         tasks.each_value do |task|
-          task.tags.each do |tag|
-#            task.tags << TaskWarrior.tags[task.tags.delete(tag)] #  Eat-up the tag names
+          # Replace those that are not a valid Tag yet
+          task.tags.reject{|tag| tag.respond_to?(:name)}.each do |tag|
+            task.tags << TaskWarrior.tags[task.tags.delete(tag)]
           end
         end
       end
