@@ -1,10 +1,11 @@
 require 'test_helper'
+
 require 'date'
 require 'active_support/core_ext'
 
-class TestAnnotation < Test::Unit::TestCase
+class TestAnnotation < MiniTest::Unit::TestCase
   include TaskWarrior::Test::Validations
-  
+
   def setup
     @annotation = TaskWarrior::Annotation.new
 

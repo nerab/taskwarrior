@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class TestTagRepository < Test::Unit::TestCase
+class TestTagRepository < MiniTest::Unit::TestCase
   include TaskWarrior
   include TaskWarrior::Test::Fixtures
 
@@ -17,7 +17,7 @@ class TestTagRepository < Test::Unit::TestCase
 
   def test_tags
     tags = @tags.all
-    assert_not_nil(tags)
+    refute_nil(tags)
     assert_equal(2, tags.size)
     assert(tags.include?(@tags.tag('finance')))
     assert(tags.include?(@tags.tag('mall')))
@@ -25,20 +25,20 @@ class TestTagRepository < Test::Unit::TestCase
 
   def test_tasks_of_tag_finance
     finance = @tags.tag('finance')
-    assert_not_nil(finance)
+    refute_nil(finance)
     assert_equal(2, finance.tasks.size)
   end
 
   def test_tasks_of_tag_mall
     mall = @tags.tag('mall')
-    assert_not_nil(mall)
+    refute_nil(mall)
     assert_equal(3, mall.tasks.size)
   end
 
   def test_equality
     t1 = @tags['b587f364-c68e-4438-b4d6-f2af6ad62518']
     t2 = t1.dup
-    assert_not_equal(t1.object_id, t2.object_id)
+    refute_equal(t1.object_id, t2.object_id)
 
     t1.description = 'changed'
     assert_equal(t1, t2)

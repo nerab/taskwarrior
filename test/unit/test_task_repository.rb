@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class TestTaskRepository < Test::Unit::TestCase
+class TestTaskRepository < MiniTest::Unit::TestCase
   include TaskWarrior
   include TaskWarrior::Test::Fixtures
 
@@ -15,7 +15,7 @@ class TestTaskRepository < Test::Unit::TestCase
 
   def test_tags_of_task
     atm = @tasks['67aafe0b-ddd7-482b-9cfa-ac42c43e7559']
-    assert_not_nil(atm)
+    refute_nil(atm)
     assert_equal(2, atm.tags.size)
   end
 
@@ -43,7 +43,7 @@ class TestTaskRepository < Test::Unit::TestCase
   def test_equality
     t1 = @tasks['b587f364-c68e-4438-b4d6-f2af6ad62518']
     t2 = t1.dup
-    assert_not_equal(t1.object_id, t2.object_id)
+    refute_equal(t1.object_id, t2.object_id)
 
     t1.description = 'changed'
     assert_equal(t1, t2)

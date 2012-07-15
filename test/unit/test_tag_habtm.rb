@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class TestTagHasAndBelongsToMany < Test::Unit::TestCase
+class TestTagHasAndBelongsToMany < MiniTest::Unit::TestCase
   include TaskWarrior::Test::Validations
 
   def setup
@@ -15,11 +15,11 @@ class TestTagHasAndBelongsToMany < Test::Unit::TestCase
     @foo << @lookup_foo
     @lookup_foo.tags << @foo
     @lookup_foo.tags << @metasyntactic
-    
+
     @deadbeef << @lookup_deadbeef
     @lookup_deadbeef.tags << @deadbeef
     @lookup_deadbeef.tags << @metasyntactic
-    
+
     @metasyntactic << @lookup_foo
     @metasyntactic << @lookup_deadbeef
   end
@@ -30,9 +30,9 @@ class TestTagHasAndBelongsToMany < Test::Unit::TestCase
 
     assert_tagged_with(@lookup_foo, @foo)
     assert_tagged_with(@lookup_foo, @metasyntactic)
-    assert_not_tagged_with(@lookup_foo, @deadbeef)
+    refute_tagged_with(@lookup_foo, @deadbeef)
 
-    assert_not_tagged_with(@lookup_deadbeef, @foo)
+    refute_tagged_with(@lookup_deadbeef, @foo)
     assert_tagged_with(@lookup_deadbeef, @metasyntactic)
     assert_tagged_with(@lookup_deadbeef, @deadbeef)
   end
@@ -43,8 +43,8 @@ class TestTagHasAndBelongsToMany < Test::Unit::TestCase
     assert_equal(2, @metasyntactic.tasks.size)
 
     assert_contains_task(@deadbeef, @lookup_deadbeef)
-    assert_not_contains_task(@deadbeef, @lookup_foo)
-    assert_not_contains_task(@foo, @lookup_deadbeef)
+    refute_contains_task(@deadbeef, @lookup_foo)
+    refute_contains_task(@foo, @lookup_deadbeef)
     assert_contains_task(@foo, @lookup_foo)
 
     assert_contains_task(@metasyntactic, @lookup_deadbeef)
@@ -55,7 +55,7 @@ class TestTagHasAndBelongsToMany < Test::Unit::TestCase
     assert(task.tags.include?(tag), "#{task} expected to be tagged with #{tag}, but it isn't.'")
   end
 
-  def assert_not_tagged_with(task, tag)
+  def refute_tagged_with(task, tag)
     assert(!task.tags.include?(tag), "#{task} expected not to be tagged with #{tag}, but it actually is.")
   end
 
@@ -63,7 +63,7 @@ class TestTagHasAndBelongsToMany < Test::Unit::TestCase
     assert(tag.tasks.include?(task), "#{tag} expected to contain #{task}, but it doesn't.")
   end
 
-  def assert_not_contains_task(tag, task)
+  def refute_contains_task(tag, task)
     assert(!tag.tasks.include?(task), "#{tag} expected to not contain #{task}, but it actually does.")
   end
 end

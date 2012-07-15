@@ -4,10 +4,10 @@ require 'active_support/core_ext'
 
 # TODO Add tests for dependencies
 
-class TestTask < Test::Unit::TestCase
+class TestTask < MiniTest::Unit::TestCase
   include TaskWarrior
   include TaskWarrior::Test::Validations
-  
+
   def setup
     @task = Task.new('foobar')
     @task.id = 1
@@ -191,7 +191,7 @@ class TestTask < Test::Unit::TestCase
     # Tasks are entities, so even with the same attributes, two different objects
     # must not be treated equal
     assert_inequality(a1, a2)
-    
+
     # But comparing the same thing to itself is fine
     assert_equal(a1, a1)
     assert_equal(a2, a2)

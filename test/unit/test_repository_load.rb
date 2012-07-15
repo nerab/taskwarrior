@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class TestRepositoryLoad < Test::Unit::TestCase
+class TestRepositoryLoad < MiniTest::Unit::TestCase
   include TaskWarrior
   include TaskWarrior::Test::Fixtures
 

@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class TestRepositorySave < Test::Unit::TestCase
+class TestRepositorySave < MiniTest::Unit::TestCase
   include TaskWarrior
 
   def setup
