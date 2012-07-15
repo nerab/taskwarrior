@@ -3,6 +3,10 @@ module TaskWarrior
     #
     # Saves a single project in the database
     #
+    # Note that direct lookup by name isn't possible for projects because the
+    # underlying TaskWarrior implementation always treats project names as
+    # 'starts with'.
+    #
     def save(project)
       #TODO raise ValidationError unless project.valid?
 
@@ -29,11 +33,6 @@ module TaskWarrior
 
     def size
       all.size
-    end
-
-    # direct lookup by name
-    def [](name)
-      find(name).first
     end
 
     private

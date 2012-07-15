@@ -15,13 +15,19 @@ class TestProjectRepository < MiniTest::Unit::TestCase
   end
 
   def test_projects
-    party = @projects['party']
+    party = @projects.find('party').first
     refute_nil(party)
     assert_equal(6, party.tasks.size)
   end
 
+  def test_tags_of_project
+    party = @projects.find('party').first
+    refute_nil(party)
+    assert_equal(2, party.tasks.count{|t| t.tags})
+  end
+
   def test_equality
-    t1 = @projects['party']
+    t1 = @projects.find('party').first
     t2 = t1.dup
     refute_equal(t1.object_id, t2.object_id)
 

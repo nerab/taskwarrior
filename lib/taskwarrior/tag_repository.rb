@@ -7,9 +7,9 @@ module TaskWarrior
       #TODO raise ValidationError unless tag.valid?
 
       if find(tag.name).any?
-        cmd = Commands::Updatetag.new(tag)
+        cmd = Commands::UpdateTag.new(tag)
       else
-        cmd = Commands::Createtag.new(tag)
+        cmd = Commands::CreateTag.new(tag)
       end
 
       cmd.run
@@ -31,7 +31,6 @@ module TaskWarrior
       all.size
     end
 
-    # direct lookup by name
     def [](name)
       find(name).first
     end

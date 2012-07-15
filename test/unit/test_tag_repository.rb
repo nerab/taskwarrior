@@ -35,6 +35,26 @@ class TestTagRepository < MiniTest::Unit::TestCase
     assert_equal(2, mall.tasks.size)
   end
 
+  def test_projects_of_tag
+    mall = @tags['mall']
+    refute_nil(mall)
+    assert_equal(2, mall.tasks.count{|t| t.project})
+
+    # {
+    #   "uuid":"e5a867b7-0116-457d-ba43-9ac2bee6ad2a",
+    #   "description":"Design invitations",
+    #   "project":"party",
+    #   "tags":["mall"]
+    # },#
+
+    # {
+    #   "uuid":"9f6f3738-1c08-4f45-8eb4-1e90864c7588",
+    #   "description":"Print invitations",
+    #   "project":"party",
+    #   "tags":["mall"],
+    # }
+  end
+
   def test_equality
     t1 = @tags['mall']
     t2 = t1.dup

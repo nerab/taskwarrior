@@ -82,7 +82,13 @@ module TaskWarrior
       tasks.each_value{|task| task.dependencies.map!{|uuid| tasks[uuid]}}
 
       # Replace the project property of each task with a proper Project object carrying a name and all of the project's tasks
-      tasks.each_value{|task| task.project = TaskWarrior.projects[task.project] if task.project } if options[:load_projects]
+      if options[:load_projects]
+        tasks.each_value.select{|task| task.project}.each do |task|
+            projects = TaskWarrior.projects.find(task.project)
+            raise "Ambiguous project name: #{projects.size} projects match #{task.project}" if projects.size > 1
+            task.project = projects.first
+        end
+      end
 
       # Replace the project property of each task with a proper Project object carrying a name and all of the project's tasks
       if options[:load_tags]
