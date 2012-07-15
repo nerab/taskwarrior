@@ -46,7 +46,20 @@ module TaskWarrior
         term = project_or_name
       end
 
-      load(Commands::FindTasksByProject.new(term).run, load_projects).reject{|t| t.parent} # Do not expose child tasks directly
+      load(Commands::FindTasksByProject.new(term).run, :load_projects => load_projects).reject{|t| t.parent} # Do not expose child tasks directly
+    end
+
+    #
+    # Find all tasks belonging to +tag_or_name+
+    #
+    def find_by_tag(tag_or_name, load_tags = true)
+      if tag_or_name.respond_to?(:name)
+        term = tag_or_name.name
+      else
+        term = tag_or_name
+      end
+
+      load(Commands::FindTasksByTag.new(term).run, :load_tags => load_tags).reject{|t| t.parent} # Do not expose child tasks directly
     end
 
     private
@@ -54,32 +67,36 @@ module TaskWarrior
     #
     # Loads multiple tasks from their JSON representation
     #
-    def load(input, load_projects = true)
+    def load(input, options = {})
       return [] if input.blank?
 
+      options = {:load_projects => true, :load_tags => true}.merge(options)
       tasks = {}
 
       MultiJson.load(input).each{|json|
         task = TaskMapper.load(json)
         tasks[task.uuid] = task
-
-        # projects[task.project].tasks << task if task.project
-
-        # Create a new Tag object in @tags that is the value for each tag name
-        # TODO Move this to TagRepository
-        #task.tags.each{|tag_name| @tags[tag_name] << task}
       }
 
       # Replace the uuid of each dependency with the real task
       tasks.each_value{|task| task.dependencies.map!{|uuid| tasks[uuid]}}
 
       # Replace the project property of each task with a proper Project object carrying a name and all of the project's tasks
-      tasks.each_value{|task| task.project = TaskWarrior.projects[task.project] if task.project } if load_projects
+      tasks.each_value{|task| task.project = TaskWarrior.projects[task.project] if task.project } if options[:load_projects]
+
+      # Replace the project property of each task with a proper Project object carrying a name and all of the project's tasks
+      if options[:load_tags]
+        tasks.each_value do |task|
+          task.tags.each do |tag|
+#            task.tags << TaskWarrior.tags[task.tags.delete(tag)] #  Eat-up the tag names
+          end
+        end
+      end
 
       # Add child tasks to their parent, but keep them in the global index
       tasks.each_value do |task|
         if task.parent
-          parent = self[task.parent] #tasks[task.parent]
+          parent = self[task.parent]
 
           if parent # we know the parent
             parent.children << task

@@ -25,9 +25,9 @@ class TestProjectRepository < MiniTest::Unit::TestCase
     t2 = t1.dup
     refute_equal(t1.object_id, t2.object_id)
 
-    skip('Re-enable once projects support write operations (see Task)')
-    # t1.name = 'less_taxes'
-    # assert_equal(t1, t2)
-    # assert(!(t1.eql?(t2)))
+  skip('Re-enable once projects support write operations (see Task)')
+    t1.name = 'less_taxes'
+    assert_equal(t1, t2)
+    assert(!(t1.eql?(t2)))
   end
 end

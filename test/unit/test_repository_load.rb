@@ -14,7 +14,6 @@ class TestRepositoryLoad < MiniTest::Unit::TestCase
     Commands::Import.new(File.new(fixture('party_taxes.json'))).run
     assert_equal(8, TaskWarrior.tasks.size)
     assert_equal(1, TaskWarrior.projects.size)
-  skip("Re-enable with TagRepository implemented")
     assert_equal(2, TaskWarrior.tags.size)
   end
 
@@ -22,7 +21,6 @@ class TestRepositoryLoad < MiniTest::Unit::TestCase
     Commands::Import.new(File.new(fixture('no_deps.json'))).run
     assert_equal(6, TaskWarrior.tasks.size)
     assert_equal(1, TaskWarrior.projects.size)
-  skip("Re-enable with TagRepository implemented")
     assert_equal(1, TaskWarrior.tags.size)
   end
 end

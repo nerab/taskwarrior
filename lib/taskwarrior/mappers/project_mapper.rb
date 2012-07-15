@@ -1,6 +1,6 @@
 module TaskWarrior
   #
-  # A DataMapper that makes new annotations from a JSON representation
+  # A DataMapper that makes new projects from a JSON representation
   #
   class ProjectMapper
     class << self

@@ -9,6 +9,7 @@ require "taskwarrior/attributes"
 
 require "taskwarrior/task_repository"
 require "taskwarrior/project_repository"
+require "taskwarrior/tag_repository"
 
 require "taskwarrior/commands"
 

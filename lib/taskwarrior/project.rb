@@ -21,12 +21,6 @@ module TaskWarrior
       "Project #{name} (#{@tasks.size} tasks)"
     end
 
-=begin
-    def eql?(other)
-      self == other
-    end
-=end
-
     def hash
       name.hash + tasks.hash
     end
