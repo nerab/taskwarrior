@@ -44,15 +44,6 @@ module TaskWarrior
     def load(input)
       return [] if input.blank?
       input.lines.map{|name| TagMapper.load(name)}
-=begin
-      tags = {}
-
-      input.each_line do |name|
-        tags[name] = TagMapper.load(name)
-      end
-
-      tags.values
-=end
     end
   end
 end

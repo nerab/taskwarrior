@@ -46,7 +46,7 @@ module TaskWarrior
         term = project_or_name
       end
 
-      load(Commands::FindTasksByProject.new(term).run, :load_projects => load_projects, :load_tags => false).reject{|t| t.parent} # Do not expose child tasks directly
+      load(Commands::FindTasksByProject.new(term).run, :load_projects => load_projects, :load_tags => false)
     end
 
     #
@@ -59,7 +59,7 @@ module TaskWarrior
         term = tag_or_name
       end
 
-      load(Commands::FindTasksByTag.new(term).run, :load_projects => false, :load_tags => load_tags).reject{|t| t.parent} # Do not expose child tasks directly
+      load(Commands::FindTasksByTag.new(term).run, :load_projects => false, :load_tags => load_tags)
     end
 
     private
