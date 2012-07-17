@@ -23,6 +23,7 @@ class TestProjectRepository < MiniTest::Unit::TestCase
   def test_tags_of_project
     party = @projects.find('party').first
     refute_nil(party)
+fail "This won't work until domain objects can use the repo to resolve aggregated objects"
     assert_equal(2, party.tasks.count{|t| t.tags})
   end
 
