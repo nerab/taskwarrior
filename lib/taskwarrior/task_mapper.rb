@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module TaskWarrior
   #
   # A DataMapper that makes new Tasks from a JSON representation
@@ -5,7 +7,7 @@ module TaskWarrior
   class TaskMapper
     class << self
       def map(json)
-        Task.new(json['description']).tap{|t|
+        Task.new(json['description']).tap do |t|
           t.id = json['id'].to_i
           t.uuid = json['uuid']
           t.entry = DateTime.parse(json['entry'])
@@ -13,22 +15,22 @@ module TaskWarrior
           t.project = json['project']
 
           if json['depends']
-            if json['depends'].respond_to?(:split)
-              t.dependencies = json['depends'].split(',')
-            else
-              t.dependencies = json['depends']
-            end
+            t.dependencies = if json['depends'].respond_to?(:split)
+                               json['depends'].split(',')
+                             else
+                               json['depends']
+                             end
           end
 
           t.parent = json['parent'] # Children will be cross-indexed in the repository
           t.priority = PriorityMapper.map(json['priority'])
-          json['tags'].each{|tag| t.tags << tag} if json['tags']
-          json['annotations'].each{|annotation| t.annotations << AnnotationMapper.map(annotation)} if json['annotations']
-          
-          %w{start wait end due}.each do |datish|
+          json['tags']&.each { |tag| t.tags << tag }
+          json['annotations']&.each { |annotation| t.annotations << AnnotationMapper.map(annotation) }
+
+          %w[start wait end due].each do |datish|
             t.send("#{datish}_at=", DateTime.parse(json[datish])) if json[datish]
           end
-        }
+        end
       end
     end
   end

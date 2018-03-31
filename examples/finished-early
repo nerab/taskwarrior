@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 #
 # Prints those tasks the were completed before they were due.
@@ -18,9 +19,9 @@ end
 
 puts "#{selected.size} tasks completed before they were due:"
 
-selected.group_by{|t| (t.due_at - t.end_at).truncate}.sort.each{|g, tasks|
+selected.group_by { |t| (t.due_at - t.end_at).truncate }.sort.each do |g, tasks|
   puts "#{g} days early:"
-  tasks.each{|t|
-  	puts "  #{t.description}"
-  }
-}
+  tasks.each do |t|
+    puts "  #{t.description}"
+  end
+end

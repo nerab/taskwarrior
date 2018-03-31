@@ -1,15 +1,17 @@
+# frozen_string_literal: true
+
 module TaskWarrior
   class Project
     attr_reader :name, :tasks
 
     include ActiveModel::Validations
-    validates :name, :presence => true
+    validates :name, presence: true
     validate :name_may_not_contain_spaces
 
     def initialize(name, tasks = [])
       @name = name
       @tasks = tasks
-      @tasks.each{|t| t.project = self}
+      @tasks.each { |t| t.project = self }
     end
 
     def <<(task)
@@ -33,10 +35,9 @@ module TaskWarrior
     end
 
     private
+
     def name_may_not_contain_spaces
-      if !name.blank? and name[/\s/]
-        errors.add(:name, "may not contain spaces")
-      end
+      errors.add(:name, 'may not contain spaces') if !name.blank? && name[/\s/]
     end
   end
 end

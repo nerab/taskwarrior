@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 module TaskWarrior
   class Tag
     attr_reader :name
 
     include ActiveModel::Validations
-    validates :name, :presence => true
+    validates :name, presence: true
     validate :name_may_not_contain_spaces
 
     def initialize(tag_or_name, tasks = [])
@@ -15,18 +17,16 @@ module TaskWarrior
         @tasks = []
       end
 
-      tasks.each{|task|
+      tasks.each do |task|
         self << task
-      }
+      end
     end
 
     def <<(task)
       @tasks << task unless @tasks.include?(task)
     end
 
-    def tasks
-      @tasks
-    end
+    attr_reader :tasks
 
     def to_s
       "Tag: #{name} (#{@tasks.size} tasks)"
@@ -44,10 +44,9 @@ module TaskWarrior
     end
 
     private
+
     def name_may_not_contain_spaces
-      if !name.blank? and name[/\s/]
-        errors.add(:name, "may not contain spaces")
-      end
+      errors.add(:name, 'may not contain spaces') if !name.blank? && name[/\s/]
     end
   end
 end

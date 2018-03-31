@@ -1,13 +1,15 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 require 'date'
 require 'active_support/core_ext'
 
-# TODO Add tests for dependencies
+# TODO: Add tests for dependencies
 
 class TestTask < MiniTest::Test
   include TaskWarrior
   include TaskWarrior::Test::Validations
-  
+
   def setup
     @task = Task.new('foobar')
     @task.id = 1
@@ -67,12 +69,12 @@ class TestTask < MiniTest::Test
   end
 
   def test_entry_wrong_format
-    @task.entry = "foobar"
+    @task.entry = 'foobar'
     assert_invalid(@task)
   end
 
   def test_entry_future
-    @task.entry = DateTime.now.advance(:days => 1)
+    @task.entry = DateTime.now.advance(days: 1)
     assert_invalid(@task)
   end
 
@@ -87,7 +89,7 @@ class TestTask < MiniTest::Test
   end
 
   def test_status_unknown_string
-    @task.status = "foobar"
+    @task.status = 'foobar'
     assert_invalid(@task)
   end
 
@@ -107,7 +109,7 @@ class TestTask < MiniTest::Test
   end
 
   def test_priority_unknown_string
-    @task.priority = "foobar"
+    @task.priority = 'foobar'
     assert_invalid(@task)
   end
 
@@ -170,17 +172,17 @@ class TestTask < MiniTest::Test
   end
 
   def assert_datish_wrong_format(sym)
-    @task.send("#{sym}=", "foobar")
+    @task.send("#{sym}=", 'foobar')
     assert_invalid(@task)
   end
 
   def assert_datish_future(sym)
-    @task.send("#{sym}=", DateTime.now.advance(:days => 1))
+    @task.send("#{sym}=", DateTime.now.advance(days: 1))
     assert_valid(@task)
   end
 
   def assert_datish_past(sym)
-    @task.send("#{sym}=", DateTime.now.advance(:days => -1))
+    @task.send("#{sym}=", DateTime.now.advance(days: -1))
     assert_valid(@task)
   end
 
@@ -191,7 +193,7 @@ class TestTask < MiniTest::Test
     # Tasks are entities, so even with the same attributes, two different objects
     # must not be treated equal
     assert_inequality(a1, a2)
-    
+
     # But comparing the same thing to itself is fine
     assert_equal(a1, a1)
     assert_equal(a2, a2)
@@ -208,7 +210,7 @@ class TestTask < MiniTest::Test
     a1.entry = DateTime.now
 
     a2 = Task.new('foo')
-    a2.entry = DateTime.now.advance(:days => -1)
+    a2.entry = DateTime.now.advance(days: -1)
 
     assert_inequality(a1, a2)
   end
@@ -218,7 +220,7 @@ class TestTask < MiniTest::Test
     a1.entry = DateTime.now
 
     a2 = Task.new('bar')
-    a2.entry = DateTime.now.advance(:days => -1)
+    a2.entry = DateTime.now.advance(days: -1)
 
     assert_inequality(a1, a2)
   end

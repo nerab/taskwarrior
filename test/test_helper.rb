@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'twtest'
 require 'minitest/autorun'
 require 'taskwarrior'
@@ -31,16 +33,16 @@ module TaskWarrior
       def assert_inequality(a1, a2)
         refute_equal(a1.object_id, a2.object_id)
         refute_equal(a1, a2)
-        assert(!(a1 == a2))
-        assert(!(a1.hash == a2.hash))
+        assert(a1 != a2)
+        assert(a1.hash != a2.hash)
         assert(!a1.eql?(a2))
         assert_equal(2, [a1, a2].uniq.size)
       end
 
       def error_message(errors)
-        errors.each_with_object([]){|e, result|
+        errors.each_with_object([]) do |e, result|
           result << e.join(' ')
-        }.join("\n")
+        end.join("\n")
       end
     end
   end

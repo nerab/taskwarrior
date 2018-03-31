@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class TestRepository < MiniTest::Test
@@ -69,6 +71,6 @@ class TestRepository < MiniTest::Test
 
     t1.description = 'changed'
     assert_equal(t1, t2)
-    assert(!(t1.eql?(t2)))
+    assert(!t1.eql?(t2))
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class TestTagHasAndBelongsToMany < MiniTest::Test
@@ -15,11 +17,11 @@ class TestTagHasAndBelongsToMany < MiniTest::Test
     @foo << @lookup_foo
     @lookup_foo.tags << @foo
     @lookup_foo.tags << @metasyntactic
-    
+
     @deadbeef << @lookup_deadbeef
     @lookup_deadbeef.tags << @deadbeef
     @lookup_deadbeef.tags << @metasyntactic
-    
+
     @metasyntactic << @lookup_foo
     @metasyntactic << @lookup_deadbeef
   end

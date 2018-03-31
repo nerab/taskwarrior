@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 require 'date'
 require 'active_support/core_ext'
@@ -38,12 +40,12 @@ class TestAnnotation < MiniTest::Test
   end
 
   def test_entry_wrong_format
-    @annotation.entry = "foobar"
+    @annotation.entry = 'foobar'
     assert_invalid(@annotation)
   end
 
   def test_entry_future
-    @annotation.entry = DateTime.now.advance(:days => 1)
+    @annotation.entry = DateTime.now.advance(days: 1)
     assert_invalid(@annotation)
   end
 
@@ -69,7 +71,7 @@ class TestAnnotation < MiniTest::Test
     a1.entry = DateTime.now
 
     a2 = TaskWarrior::Annotation.new('foo')
-    a2.entry = DateTime.now.advance(:days => -1)
+    a2.entry = DateTime.now.advance(days: -1)
 
     assert_inequality(a1, a2)
   end
@@ -79,7 +81,7 @@ class TestAnnotation < MiniTest::Test
     a1.entry = DateTime.now
 
     a2 = TaskWarrior::Annotation.new('bar')
-    a2.entry = DateTime.now.advance(:days => -1)
+    a2.entry = DateTime.now.advance(days: -1)
 
     assert_inequality(a1, a2)
   end
