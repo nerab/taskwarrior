@@ -4,7 +4,7 @@ require 'active_support/core_ext'
 
 # TODO Add tests for dependencies
 
-class TestTask < Test::Unit::TestCase
+class TestTask < MiniTest::Test
   include TaskWarrior
   include TaskWarrior::Test::Validations
   

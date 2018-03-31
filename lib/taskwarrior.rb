@@ -1,5 +1,4 @@
 require 'active_model'
-require 'multi_json'
 require 'date'
 
 require "taskwarrior/version"

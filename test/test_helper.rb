@@ -1,4 +1,5 @@
 require 'twtest'
+require 'minitest/autorun'
 require 'taskwarrior'
 
 module TaskWarrior
@@ -8,7 +9,7 @@ module TaskWarrior
         File.join(File.dirname(__FILE__), 'fixtures', name)
       end
     end
-    
+
     module Validations
       def assert_valid(task)
         assert(task.valid?, error_message(task.errors))
@@ -19,7 +20,7 @@ module TaskWarrior
       end
 
       def assert_equality(a1, a2)
-        assert_not_equal(a1.object_id, a2.object_id)
+        refute_equal(a1.object_id, a2.object_id)
         assert_equal(a1, a2)
         assert(a1 == a2)
         assert(a1.hash == a2.hash)
@@ -28,8 +29,8 @@ module TaskWarrior
       end
 
       def assert_inequality(a1, a2)
-        assert_not_equal(a1.object_id, a2.object_id)
-        assert_not_equal(a1, a2)
+        refute_equal(a1.object_id, a2.object_id)
+        refute_equal(a1, a2)
         assert(!(a1 == a2))
         assert(!(a1.hash == a2.hash))
         assert(!a1.eql?(a2))

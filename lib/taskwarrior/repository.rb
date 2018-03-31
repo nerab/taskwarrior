@@ -5,7 +5,7 @@ module TaskWarrior
       @projects = Hash.new{|hash, key| hash[key] = Project.new(key)}
       @tags = Hash.new{|hash, key| hash[key] = Tag.new(key)}
 
-      MultiJson.load(input).each{|json|
+      JSON.parse(input).each{|json|
         task = TaskWarrior::TaskMapper.map(json)
         @tasks[task.uuid] = task
         @projects[task.project].tasks << task if task.project

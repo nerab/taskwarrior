@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class TestProject < Test::Unit::TestCase
+class TestProject < MiniTest::Test
   include TaskWarrior::Test::Validations
 
   def test_name

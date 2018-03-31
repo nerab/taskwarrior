@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class TestTag < Test::Unit::TestCase
+class TestTag < MiniTest::Test
   include TaskWarrior
   include TaskWarrior::Test::Validations
 
