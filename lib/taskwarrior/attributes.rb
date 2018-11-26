@@ -8,7 +8,7 @@ module TaskWarrior
           @attributes
         else
           @attributes = attr
-          @attributes.each { |attr| send('attr_accessor', attr) }
+          @attributes.each { |a| send('attr_accessor', a) }
         end
       end
     end

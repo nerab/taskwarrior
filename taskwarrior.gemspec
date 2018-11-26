@@ -2,6 +2,7 @@
 # frozen_string_literal: true
 
 require File.expand_path('lib/taskwarrior/version', __dir__)
+require 'English'
 
 Gem::Specification.new do |gem|
   gem.authors       = ['Nicholas E. Rabenau']
